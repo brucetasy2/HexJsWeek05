@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>login</title>
+</head>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+  integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+
+<body >
+  <div id="app">
+    <div class="container " style="margin-top: 120px;">
+      <div class="card">
+        <div class="mx-auto" style="margin-top: 40px;" >
+             <h2></h2> 請登入系統</h2>
+          </div>
+
+        <div class="card-body" style="margin-top: 20px;">
+          <form class="form-login" @submit.prevent="login">
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+              </div>
+
+              <input type="text" name="email" class="form-control" placeholder="Username" required
+                v-model="user.email" />
+            </div>
+
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+              </div>
+              <input type="password" name="password" class="form-control" placeholder="Password"
+                v-model="user.password" />
+            </div>
+
+            <div class="form-group mx-5">
+              <input type="button" name="btn" value="Login" class="btn btn-outline-danger float-right login_btn mx-2"
+                @click="login" />
+
+              <input type="button" name="btn" value="Logout" class="btn btn-outline-warning float-right login_btn mx-2"
+                @click="logout" />
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script>
+    //   參數定義
+    const uuid = 'd952d084-2b40-40c3-9758-1aef7c7aa9e6';
+    const apipath = 'https://course-ec-api.hexschool.io/api/';
+
+    new Vue({
+      el: '#app',
+      data: {
+        user: {
+          email: '',
+          password: '',
+        },
+      },
+      methods: {
+        login() {
+          // 進行驗證
+          const api = `${apipath}auth/login`;
+          axios
+            .post(api, this.user)
+            .then((response) => {
+              // console.log(response);
+              const token = response.data.token;
+              const expired = response.data.expired;
+
+              // 寫入 cookie token  expires 設置有效時間
+              document.cookie = `token=${token};expires=${new Date(
+                expired * 1000
+              )}; path=/`;
+              window.location = 'prducts.html';
+            })
+            .catch((error) => {
+              console.log(error);
+              alert("親 ! 驗證失敗，請在嘗試 !")
+            });
+        },
+
+        //   清除token
+        logout() {
+          document.cookie =
+            'token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
+        },
+      },
+    });
+  </script>
+</body>
+
+</html>

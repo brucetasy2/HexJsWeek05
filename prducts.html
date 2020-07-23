@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 外部引用 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+
+  <title>HexJsWeek05</title>
+</head>
+
+<body>
+  <div id="app" class="container mt-3">
+    <div>
+      <div class="text-right mt-4">
+        <button class="btn btn-primary" @click="DoEditProduct('new')">
+          建立新的產品
+        </button>
+      </div>
+
+      <!-- 01 顯示資料明細 -->
+      <table class="table mt-4">
+        <thead>
+          <tr>
+            <th width="120">分類</th>
+            <th>產品名稱</th>
+            <th width="120">原價</th>
+            <th width="120">售價</th>
+            <th width="100">是否啟用</th>
+            <th width="120">編輯</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="(product) in products">
+            <td>{{product.category}}</td>
+            <td>{{product.title}}</td>
+            <td class="text-right">{{product.origin_price}}</td>
+            <td class="text-right">{{product.price}}</td>
+            <td>
+              <span v-if="product.enabled" class="text-success">販售中</span>
+              <span v-else>禁販售</span>
+            </td>
+            <td>
+              <div class="btn-group">
+                <button class="btn btn-outline-primary btn-sm" @click="DoEditProduct('edit',product)">
+                  編輯
+                </button>
+                <button class="btn btn-outline-danger btn-sm" @click="DoEditProduct('delete',product)">
+                  刪除
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 02 新增或編輯 產品 -->
+      <editproduct ref="editproduct" :tranpacka="tranpacka" @editproductupdate="getData"> </editproduct>
+      <!-- 03 刪除品確認 -->
+      <dropproduct ref="dropproduct" :tranpacka="tranpacka" @dropproductupdate="getData"></dropproduct>
+    </div>
+
+    <!-- 04 分頁 -->
+    <do-Navigater :pages="pages" @gotopage="getData"></do-Navigater>
+  </div>
+
+  <!-- 外部引用 -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <!-- vee-validate 套件 (注意版本，full 則包含 rules) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/3.3.0/vee-validate.full.min.js"></script>
+
+  <!-- 我的樣板 -->
+  <script type="module" src="./js/dropproduct.js"></script>
+  <script type="module" src="./js/editproduct.js"></script>
+  <script src="./js/pagination.js"></script>
+  <script src="./js/all.js"></script>
+
+
+</body>
+
+
+</script>
+
+</html>
