@@ -12,13 +12,13 @@ Vue.component('editproduct', {
             </button>
         </div>                                          <!--03-->
 
-        <div class="modal-body">    <!--04-->
+        <div class="modal-body was-validated">    <!--04-->
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
                         <validation-provider rules="required" v-slot="{ errors }">                    
                             <label for="imageUrl">輸入圖片網址[imageUrl]</label>
-                            <input id="imageUrl" type="text" placeholder="請輸入圖片連結" 
+                            <input id="imageUrl" type="text" placeholder="請輸入圖片連結" required=""
                                 class="form-control" v-model="indata.imageUrl[0]" />
                         <span v-if="errors[0]" class='text-danger'>{{ errors[0] }}</span>                            
                         </ValidationProvider>
@@ -31,8 +31,8 @@ Vue.component('editproduct', {
                     <div class="form-group">
                         <validation-provider rules="required|min:6" v-slot="{ errors }">
                             <label for="title">標題[title]</label>
-                            <input id="title" type="text" placeholder="請輸入標題" 
-                            class="form-control" v-model="indata.title" />
+                            <input id="title" type="text" placeholder="請輸入標題" required=""
+                            class="form-control" v-model="indata.title"/>
                         <span v-if="errors[0]" class='text-danger'>{{ errors[0] }}</span>                            
                         </ValidationProvider>
                     </div>
@@ -42,7 +42,7 @@ Vue.component('editproduct', {
                             <validation-provider 
                                 rules="required|min:6|max:10" v-slot="{errors}">                                                            
                                 <label for="category">分類[category]</label>
-                                <input id="category" type="text" placeholder="請輸入分類" 
+                                <input id="category" type="text" placeholder="請輸入分類" required=""
                                 class="form-control" v-model="indata.category" />
                             <span v-if="errors[0]" class='text-danger'>{{ errors[0] }}</span>                            
                             </ValidationProvider>                            
@@ -51,7 +51,7 @@ Vue.component('editproduct', {
                         <div class="form-group col-md-6">
                             <validation-provider rules="required|min:2|max:6" v-slot="{ errors }">                                  
                                 <label for="price">單位[unit]</label>
-                                <input id="unit" type="unit" placeholder="請輸入單位" 
+                                <input id="unit" type="unit" placeholder="請輸入單位" required=""
                                 class="form-control" v-model="indata.unit" />
                             <span v-if="errors[0]" class='text-danger'>{{ errors[0] }}</span>                            
                             </ValidationProvider>                            
@@ -62,7 +62,7 @@ Vue.component('editproduct', {
                         <div class="form-group col-md-6">
                             <validation-provider rules="required|integer" v-slot="{ errors }">                           
                                 <label for="origin_price">原價[origin_price]</label>
-                                <input id="origin_price" type="number" placeholder="請輸入原價" 
+                                <input id="origin_price" type="number" placeholder="請輸入原價" required=""
                                 class="form-control" v-model="indata.origin_price" />
                             <span v-if="errors[0]" class='text-danger'>{{ errors[0] }}</span>                            
                             </ValidationProvider>                                       
@@ -71,7 +71,7 @@ Vue.component('editproduct', {
                         <div class="form-group col-md-6">
                             <validation-provider rules="required|integer" v-slot="{ errors }">                          
                                 <label for="price">售價[price]</label>
-                                <input id="price" type="number" placeholder="請輸入售價" 
+                                <input id="price" type="number" placeholder="請輸入售價" required=""
                                     class="form-control" v-model="indata.price" />
                             <span v-if="errors[0]" class='text-danger'>{{ errors[0] }}</span>                            
                             </ValidationProvider>               
@@ -83,16 +83,19 @@ Vue.component('editproduct', {
                     <div class="form-group">
                         <validation-provider rules="required|max:80" v-slot="{ errors }">                                              
                             <label for="description">產品描述[description]</label>
-                            <textarea id="description" type="text" placeholder="請輸入產品描述" 
+                            <textarea id="description" type="text" placeholder="請輸入產品描述" required=""
                                 class="form-control" v-model="indata.description"></textarea>
                         <span v-if="errors[0]" class='text-danger'>{{ errors[0] }}</span>                            
                         </ValidationProvider>                                 
                     </div>
 
                     <div class="form-group">
-                        <label for="content">說明內容[content]</label>
-                        <textarea id="description" type="text" placeholder="請輸入說明內容" 
-                            class="form-control" v-model="indata.content"></textarea>
+                        <validation-provider rules="required|max:80" v-slot="{ errors }">    
+                            <label for="content">說明內容[content]</label>
+                            <textarea id="description" type="text" placeholder="請輸入說明內容" required=""
+                                class="form-control" v-model="indata.content"></textarea>
+                            <span v-if="errors[0]" class='text-danger'>{{ errors[0] }}</span>                            
+                        </ValidationProvider>                                  
                     </div>
 
                     <div class="form-group">
