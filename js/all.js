@@ -1,25 +1,14 @@
 
-// 引入驗證套件
-// import zh from 'zh_TW.js';
-
-// 自定義設定檔案，錯誤的 className
-VeeValidate.configure({
-    classes: {
-        valid: 'is-valid',
-        invalid: 'is-invalid',
-    },
-});
-
-// // 載入自訂規則包
+// 引入驗證套件 & 載入自訂規則包  <--- 引入就會發生  Cannot use import statement outside a module 的錯誤
+// import zh from './zh_TW.js';
 // VeeValidate.localize('tw', zh);
 
 // 將 VeeValidate input 驗證工具載入 作為全域註冊
 Vue.component('ValidationProvider', VeeValidate.ValidationProvider);
+
 // 將 VeeValidate 完整表單 驗證工具載入 作為全域註冊
 Vue.component('ValidationObserver', VeeValidate.ValidationObserver);
 
-// // 載入自訂規則包
-// VeeValidate.localize('tw', zh_tw);
 
 var app = new Vue({
     el: '#app',
