@@ -1,6 +1,6 @@
 
 // 引入驗證套件 & 載入自訂規則包  <--- 引入就會發生  Cannot use import statement outside a module 的錯誤
- import zh from './zh_TW.js';
+ import zh from 'zh_TW.js';
  VeeValidate.localize('tw', zh);
 
 // 將 VeeValidate input 驗證工具載入 作為全域註冊
